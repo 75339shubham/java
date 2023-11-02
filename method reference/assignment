@@ -1,0 +1,120 @@
+QU no=01  define a functional interface "First" with an abstract method "void disp1()".
+define a class "Second" with a method "void fun1()"
+
+inside main function create a method reference for "First" and invoke "fun1" of "Second"
+
+
+SOLUTION=01
+
+interface First
+{
+	void disp();
+}
+class Second 
+{
+	void fun1()
+	{
+		System.out.println("Second function 1 is called");
+	}
+	
+}
+public class demo1 {
+public static void main(String[] args)
+{ Second ref1= new Second();
+
+	First ref=ref1::fun1;
+	ref.disp();
+}
+}
+
+QU NO=02) 
+define a functional interface "Third" with an abstract method "void show(int num)".
+define a class "Sample" with a method "void disp(int num)"
+
+inside main function create a method reference for "Third" and invoke "disp" of "Sample" by passing a value "500".
+
+
+SOLUTION=02
+
+interface Third
+{
+	void show (int num);
+}
+class Sample
+{
+	void disp(int num)
+	{
+		System.out.println("Second function 1 is called");
+	}
+	
+}
+public class demo1 {
+public static void main(String[] args)
+{ Sample ref1= new Sample();
+
+	Third ref=ref1::disp;
+	ref.show(500);
+}
+}
+
+QU NO=03 define a functional interface "Fifth" with an abstract method "int add(int a,int b)"
+define a class Math1 with a method "int calc(int a,int b)" 
+
+inside main function invoke "calc" method with the help of
+	a) lamdba expression
+	b) method reference
+
+SOLUTION=03
+interface Fifth
+{
+	int add (int a,int b);
+}
+class Math1
+{
+	int calc(int a,int b)
+	{
+		return a+b;
+	}
+	
+}
+public class demo1 {
+public static void main(String[] args)
+{ Math1 sum=new Math1();
+Fifth emp=(int x,int y)->sum.calc(x, y);
+System.out.println(emp.add(6,7));
+	
+Fifth emp1=sum::calc;
+System.out.println(emp1.add(9, 8));
+}
+}
+
+QU NO=04 
+define a functional interface "Sixth" with an abstract method "void disp5()".
+define a class "Sample" with a static method "void fun1()"
+
+inside main function create a method reference for "Sixth" and invoke "fun1" of "Sample"
+
+SOLUTION=04
+interface Sixth
+{
+	void disp5();
+}
+class Sample
+{
+	static void fun1()
+	{
+		System.out.println("Sample static function 1 is called");
+	}
+	
+}
+public class demo1 {
+public static void main(String[] args)
+{ 
+
+	Sixth ref=Sample::fun1;
+	ref.disp5();
+}
+}
+
+
+
