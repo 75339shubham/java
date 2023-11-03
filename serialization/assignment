@@ -1,1 +1,374 @@
 
+1)create a customer class with following attributes
+	custid
+	custname
+	address
+	age
+create one instance of it and store it in a file. (Serialization).
+now open a file, read the object and read its contents . (Deserialization)
+
+
+Ans:-----------------------------------------------------
+import java.io.*;
+class Customer implements Serializable
+{
+	int custid=110;
+	String custname="Shubham";
+	String address="Goa";
+	int age=29;
+	
+}
+
+public class Myclass
+{
+	public static void main(String args[])
+	{
+		Customer cust = new Customer();
+		System.out.println("Before serialization: ");
+		System.out.println(cust.custid);
+		System.out.println(cust.custname);
+		System.out.println(cust.address);
+		System.out.println(cust.age+"\n");
+		//To Write Object into File
+		try(FileOutputStream fos= new FileOutputStream("D:\\CDAC SEP 23\\Core Java\\Code\\Day 13\\Prac"))
+		{ 
+			try(ObjectOutputStream oos= new ObjectOutputStream(fos))
+			{
+				oos.writeObject(cust);
+			}
+		
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		//To Read Object from file
+		try(FileInputStream fis=new FileInputStream("D:\\CDAC SEP 23\\Core Java\\Code\\Day 13\\Prac"))
+		{
+			try(ObjectInputStream ois= new ObjectInputStream(fis))
+			{
+				Customer c2 =(Customer)ois.readObject();
+				System.out.println("After Serilization: ");
+				System.out.println(c2.custid);
+				System.out.println(c2.custname);
+				System.out.println(c2.address);
+				System.out.println(c2.age);
+			}
+			
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();	
+		}
+	}
+}
+
+********************************************************************************
+
+2) Person class implements Serializable with
+	private String name
+	private int age
+
+		getters and setters
+		parameterized constructor
+
+Student extends Person
+	private int rollno
+		getter and setters
+		parameterized constructor accepting name,age and rollno
+			pass name and age to the super constructor
+
+Answer:--------------------------------------------------------------------------------
+
+import java.io.*;
+
+class Person implements Serializable
+{
+	private String name;
+	private int age;
+	
+	public Person(String name,int age)
+	{
+		this.name=name;
+		this.age=age;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	public int getAge() 
+	{
+		return age;
+	}
+	public void setAge(int age)
+	{
+		this.age = age;
+	}
+}
+
+class Student extends Person
+{
+	private int RollNo;
+	public Student(String name,int age,int RollNo)
+	{
+		super(name,age);
+		this.RollNo=RollNo;
+	}
+
+	public int getRollNo() 
+	{
+		return RollNo;
+	}
+
+	public void setRollNo(int rollNo) 
+	{
+		RollNo = rollNo;
+	}
+	
+}
+
+public class Demo
+{
+	public static void main(String args[])
+	{
+		Student s1= new Student("Harshal",26,19);
+		System.out.println("Before: ");
+		System.out.println(s1.getName());
+		System.out.println(s1.getAge());
+		System.out.println(s1.getRollNo());
+		try(FileOutputStream fos= new FileOutputStream("D:\\CDAC SEP 23\\Core Java\\Code\\Day 13\\Prac1"))
+		{
+			try(ObjectOutputStream oos=new ObjectOutputStream(fos))
+			{
+				System.out.println("Edted bfore storing into file \n");
+				s1.setName("Sarode");
+				s1.setAge(22);
+				s1.setRollNo(91);
+				oos.writeObject(s1);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		try(FileInputStream fis= new FileInputStream("D:\\CDAC SEP 23\\Core Java\\Code\\Day 13\\Prac1"))
+		{
+			try(ObjectInputStream ois=new ObjectInputStream(fis))
+			{
+				Student s2 =(Student)ois.readObject();
+				System.out.println("After: ");
+				System.out.println(s2.getName());
+				System.out.println(s2.getAge());
+				System.out.println(s2.getRollNo());
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+}
+
+******************************************************************************************************************************************************
+
+3) Define a class "Student" with
+	private int rollno and private String name and private int age;
+	setters and getters
+
+	create 2 objects of Student and write them inside filesystem and thereafter read both the objects and display.
+
+Answer:-------------------------------------------------------------
+
+import java.io.*;
+
+class Student implements Serializable
+{
+	private int rollno;
+	private String name;
+	private int age;
+	public int getRollno() 
+	{
+		return rollno;
+	}
+	public void setRollno(int rollno) 
+	{
+		this.rollno = rollno;
+	}
+	public String getName()
+	{
+		return name;
+	}
+	public void setName(String name) 
+	{
+		this.name = name;
+	}
+	public int getAge() 
+	{
+		return age;
+	}
+	public void setAge(int age) 
+	{
+		this.age = age;
+	}
+	
+}
+
+public class Demo
+{
+	public static void main(String args[])
+	{
+		Student s1= new Student();
+		Student s2= new Student();
+		s1.setRollno(19);
+		s1.setName("Harshal");
+		s1.setAge(45);
+		
+		s2.setRollno(91);
+		s2.setName("Sarode");
+		s2.setAge(55);
+	
+		try(FileOutputStream fos= new FileOutputStream("D:\\CDAC SEP 23\\Core Java\\Code\\Day 13\\Prac1"))
+		{
+			try(ObjectOutputStream oos=new ObjectOutputStream(fos))
+			{
+				oos.writeObject(s1);
+				oos.writeObject(s2);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		try(FileInputStream fis= new FileInputStream("D:\\CDAC SEP 23\\Core Java\\Code\\Day 13\\Prac1"))
+		{
+			try(ObjectInputStream ois=new ObjectInputStream(fis))
+			{
+				Student s3 =(Student)ois.readObject();
+				System.out.println("After first object deserialize: ");
+				System.out.println(s3.getRollno());
+				System.out.println(s3.getName());
+				System.out.println(s3.getAge());
+				
+				Student s4 =(Student)ois.readObject();
+				System.out.println("After second object deserialize: ");
+				System.out.println(s4.getRollno());
+				System.out.println(s4.getName());
+				System.out.println(s4.getAge());
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+}
+
+*****************************************************************************************************************************
+
+4) create two classes
+	Engine
+		private int speed
+		private String type
+			setters and getters
+
+	Car
+		private Engine engine;
+		private String modelname;
+			setters and getters
+
+define class "Demo" with main
+	inside main create object of Car and then pass Engine to its setEngine method.
+	now serialize this object of Car and deserialize it.
+
+Answer:----------------------------------------------------------
+
+import java.io.*;
+
+class Engine implements Serializable
+{
+	private int speed;
+	private String type;
+	public int getSpeed()
+	{
+		return speed;
+	}
+	public void setSpeed(int speed)
+	{
+		this.speed = speed;
+	}
+	public String getType() 
+	{
+		return type;
+	}
+	public void setType(String type)
+	{
+		this.type = type;
+	}
+
+}
+
+class Car implements Serializable
+{
+	private Engine engine;
+	private String modelname;
+	public Engine getEngine()
+	{
+		return engine;
+	}
+	public void setEngine(Engine engine)
+	{
+		this.engine = engine;
+	}
+	public String getModelname() 
+	{
+		return modelname;
+	}
+	public void setModelname(String modelname) 
+	{
+		this.modelname = modelname;
+	}
+}
+
+public class Myclass
+{
+	public static void main(String args[])
+	{
+		Car c1 = new Car();
+		c1.setEngine(new Engine());
+		c1.setModelname("Maruti");
+		try(FileOutputStream fos= new FileOutputStream("D:\\CDAC SEP 23\\Core Java\\Code\\Day 13\\Prac2"))
+		{
+			try(ObjectOutputStream oos=new ObjectOutputStream(fos))
+			{
+				oos.writeObject(c1);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		try(FileInputStream fis= new FileInputStream("D:\\CDAC SEP 23\\Core Java\\Code\\Day 13\\Prac2"))
+		{
+			try(ObjectInputStream ois=new ObjectInputStream(fis))
+			{
+				Car c2= (Car)ois.readObject();
+				System.out.println(c2.getModelname());
+				System.out.println(c2.getEngine());
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+	}
+}
+
+***************************************************************
+***************************************************************
